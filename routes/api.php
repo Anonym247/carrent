@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(['prefix' => 'manage'], function () {
+    Route::get('cars', [\App\Http\Controllers\ManagementController::class, 'cars']);
+    Route::get('clients', [\App\Http\Controllers\ManagementController::class, 'clients']);
+    Route::put('attach', [\App\Http\Controllers\ManagementController::class, 'attachCarToClient']);
+    Route::put('detach', [\App\Http\Controllers\ManagementController::class, 'detachCarFromClient']);
 });

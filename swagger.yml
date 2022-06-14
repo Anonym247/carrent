@@ -1,0 +1,112 @@
+swagger: "2.0"
+info:
+  description: "Car Rental Service"
+  version: "1.0.0"
+  title: "Carrent"
+  contact:
+    email: "shamil.mardanzade@gmail.com"
+host: "localhost:8000"
+basePath: "/api"
+tags:
+- name: "cars"
+  description: "Cars"
+- name: "clients"
+  description: "Clients"
+- name: "management"
+  description: "Operations about cars & clients"
+schemes:
+- "http"
+
+paths:
+  /manage/cars:
+    get:
+      tags:
+      - "cars"
+      summary: "Get car list with clients (if exists)"
+      description: ""
+      operationId: "getCarList"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      responses:
+        "200":
+          description: "List of cars"
+  /manage/clients:
+    get:
+      tags:
+      - "clients"
+      summary: "Get client list with cars (if exists)"
+      description: ""
+      operationId: "getClientList"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      responses:
+        "200":
+          description: "List of clients"
+  /manage/attach:
+    put:
+      tags:
+      - "management"
+      summary: "Assign car to client"
+      description: ""
+      operationId: "attach"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        schema: 
+          $ref: "#/definitions/Attachment"
+      responses:
+        "200":
+          description: "In case that everything is okay, car attached to client"
+        "400":
+          description: "In case when car or client has one attachments"
+        "404":
+          description: "In case when car or client not found by given id"
+  /manage/detach:
+    put:
+      tags:
+      - "management"
+      summary: "Detach car from client"
+      description: ""
+      operationId: "detach"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        schema: 
+          $ref: "#/definitions/Attachment"
+      responses:
+        "200":
+          description: "In case that everything is okay, car detached from client"
+        "400":
+          description: "In case when car does not belongs to client"
+        "404":
+          description: "In case when car or client not found by given id"
+definitions:
+  Attachment:
+    type: "object"
+    properties:
+      car_id:
+        type: "integer"
+        format: "int64"
+      client_id:
+        type: "integer"
+        format: "int64"
